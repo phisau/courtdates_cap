@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="staging" EntityType="CatalogService.staging"/>
+            </EntityContainer>
+            <EntityType Name="staging">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CASENUMBER" Type="Edm.String" MaxLength="10"/>
+                <Property Name="FILENUMBER1" Type="Edm.String" MaxLength="20"/>
+                <Property Name="FILENUMBER2" Type="Edm.String" MaxLength="20"/>
+                <Property Name="OFFENCE" Type="Edm.String" MaxLength="100"/>
+                <Property Name="DEFENDANT" Type="Edm.String" MaxLength="100"/>
+                <Property Name="OFFICER" Type="Edm.String" MaxLength="100"/>
+                <Property Name="COUNTY" Type="Edm.String" MaxLength="100"/>
+                <Property Name="COURTDATE" Type="Edm.String" MaxLength="10"/>
+                <Property Name="COURTROOM" Type="Edm.String" MaxLength="100"/>
+                <Property Name="BOND" Type="Edm.String" MaxLength="15"/>
+                <Property Name="BONDATTR" Type="Edm.String" MaxLength="50"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

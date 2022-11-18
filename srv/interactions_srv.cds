@@ -1,4 +1,4 @@
-using app.interactions from '../db/interactions';
+/*using app.interactions from '../db/interactions';
 service CatalogService {
 
  entity Interactions_Header
@@ -8,3 +8,4 @@ service CatalogService {
     as projection on  interactions.Interactions_Items;
 
 }
+*/
