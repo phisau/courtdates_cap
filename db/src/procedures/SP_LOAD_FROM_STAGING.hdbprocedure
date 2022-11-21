@@ -33,8 +33,61 @@ BEGIN
         join cd_county c
         on r.county_name = c.county_name;
             INSERT INTO CD_ROOM (ID, ROOM_NAME, COUNTY_ID)
-            select "procs::SQ_COUNTY_ID".nextval AS ID , room_NAME, COUNTY_ID from :new_rooms_w_county_id;
-        END;
+            select "procs::SQ_COUNTY_ID".nextval AS ID , room_NAME, COUNTY_ID --, now(), current_user, now(), current_user
+            from :new_rooms_w_county_id;
+    END;
         
+    BEGIN
+        /* UPDATE ATTORNEY TABLE */
+
+        --INSERT INTO 
+    /* END ATTORNEY TABLE */
+    END;
+
+    BEGIN
+        /* CLIENT */
+        client_staging = SELECT DISTINCT substr_after(substr_after(DEFENDANT, ','),',') AS firstname, 
+    substr_before(substr_after(DEFENDANT, ','),',') AS middlename, 
+    substr_before(DEFENDANT, ',') AS lastname  FROM cd_staging;
+
+        client_new = 
+            select firstname, middlename, lastname from :client_staging 
+            minus
+            select firstname, middlename, lastname from cd_client;
+
+        insert into cd_client (ID, firstname, middlename, lastname, createdat, createdby, modifiedat, modifiedby)
+            select "procs::SQ_CLIENT_ID".nextval AS ID , firstname, middlename, lastname, now(), current_user, now(), current_user
+            from :client_new;
+
+    END;
+
+    BEGIN
+    officer_staging = SELECT DISTINCT substr_after(substr_after(OFFICER, ','),',') AS firstname, 
+substr_before(substr_after(OFFICER, ','),',') AS middlename, 
+substr_before(OFFICER, ',') AS lastname, 
+    'NA' AS rank,
+    cd_staging.county as county_name,
+    cd_county.id as county_id
+    FROM cd_staging
+    join cd_county
+    on cd_staging.county = cd_county.COUNTY_NAME ;
+    officer_new = 
+        select firstname, middlename, lastname, RANK, county_id from :officer_staging 
+        minus
+        select firstname, middlename, lastname, rank, county_id from cd_officer;
+               insert into cd_officer (ID, firstname, middlename, lastname, rank, county_id, createdat, createdby, modifiedat, modifiedby)
+        select "procs::SQ_CLIENT_ID".nextval AS ID , firstname, middlename, lastname, RANK, county_id, now(), current_user, now(), current_user
+        from :officer_new;
+    END;
+
+
+    BEGIN
+        /* UPDATE OFFENCE TABLE */
+            offence = select distinct offence from cd_staging;
+            new_offence = SELECT offence as offence_name FROM :offence minus SELECT DISTINCT offence_name FROM cd_offence;  
+            INSERT INTO CD_offence (ID, offence_NAME, createdat, createdby, modifiedat, modifiedby)
+            select "procs::SQ_OFFENCE_ID".nextval AS ID , OFFENCE_NAME, now(), current_user, now(), current_user from :new_offence;
+    
+    END;
 END;
 

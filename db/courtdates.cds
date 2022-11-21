@@ -29,9 +29,7 @@ entity attorney : managed {
         FIRSTNAME  : Name;
         MIDDLENAME : Name;
         LASTNAME   : Name;
-        COUNTY     : Association to county;
-
-
+//        COUNTY     : Association to county;
 };
 
 entity client : managed {
@@ -43,7 +41,7 @@ entity client : managed {
 
 };
 
-entity offence {
+entity offence : managed {
     key ID   : Integer;
         OFFENCE_NAME : String(200);
         CLS  : String(50);
