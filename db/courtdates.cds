@@ -12,7 +12,7 @@ type SDATE : Date;
 
 entity county : managed {
     key ID   : Integer;
-        TEXT : String(50);
+        COUNTY_NAME : String(50);
 };
 
 entity officer : managed {
@@ -45,14 +45,14 @@ entity client : managed {
 
 entity offence {
     key ID   : Integer;
-        TEXT : String(200);
+        OFFENCE_NAME : String(200);
         CLS  : String(50);
 };
 
 entity room {
 
     key ID     : Integer;
-        NAME   : Name;
+        ROOM_NAME   : Name;
         COUNTY : Association to one county;
 };
 
@@ -84,4 +84,4 @@ entity staging : cuid {
         BOND        : String(15);
         BONDATTR    : String(50);
 
-}
+};

@@ -1,0 +1,40 @@
+PROCEDURE "procs::SP_LOAD_FROM_STAGING"( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+
+    staging = select * from cd_staging;
+    select * from :staging;
+
+    /* UPDATE ATTORNEY TABLE */
+    /*lt_attorneys = select distinct attorney from cd_staging;
+
+    UPSERT cd_attorney (ID, FIRSTNAME, MIDDLENAME, LASTNAME, COUNTID)
+    VALUES 
+*/
+
+    BEGIN
+    /* UPDATE COUNTY TABLE */
+        counties = select distinct county from cd_staging;
+        new_counties = SELECT county as county_name FROM :counties minus SELECT DISTINCT COUNTY_NAME FROM cd_COUNTY;  
+        INSERT INTO CD_COUNTY (ID, COUNTY_NAME, createdat, createdby, modifiedat, modifiedby)
+        select "procs::SQ_COUNTY_ID".nextval AS ID , COUNTY_NAME, now(), current_user, now(), current_user from :new_counties;
+
+    END;
+    BEGIN
+        /* UPDATE ROOM TABLE */
+        rooms_staging = select distinct courtroom AS room_name, county AS county_name from cd_staging;
+        new_rooms = SELECT room_name, county_name FROM :rooms_staging minus SELECT DISTINCT ROOM_name, COUNTY_name
+        FROM MD_ROOMS ;
+        new_rooms_w_county_id = select room_name, r.county_name as county_name, c.id as county_id
+        from :new_rooms r
+        join cd_county c
+        on r.county_name = c.county_name;
+            INSERT INTO CD_ROOM (ID, ROOM_NAME, COUNTY_ID)
+            select "procs::SQ_COUNTY_ID".nextval AS ID , room_NAME, COUNTY_ID from :new_rooms_w_county_id;
+        END;
+        
+END;
+
