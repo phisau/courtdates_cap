@@ -18,7 +18,8 @@
   },
   "scripts": {
     "start": "cds run",
-    "watch-staging": "cds watch --open staging/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-staging": "cds watch --open staging/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-officer": "cds watch --open officer/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
@@ -73,6 +74,7 @@
     }
   },
   "sapux": [
-    "app/staging"
+    "app/staging",
+    "app/officer"
   ]
 }

@@ -6,7 +6,7 @@ PROCEDURE "procs::SP_LOAD_FROM_STAGING"( )
 BEGIN
 
     staging = select * from cd_staging;
-    select * from :staging;
+   -- select * from :staging;
 
     /* UPDATE ATTORNEY TABLE */
     /*lt_attorneys = select distinct attorney from cd_staging;
@@ -87,7 +87,39 @@ substr_before(OFFICER, ',') AS lastname,
             new_offence = SELECT offence as offence_name FROM :offence minus SELECT DISTINCT offence_name FROM cd_offence;  
             INSERT INTO CD_offence (ID, offence_NAME, createdat, createdby, modifiedat, modifiedby)
             select "procs::SQ_OFFENCE_ID".nextval AS ID , OFFENCE_NAME, now(), current_user, now(), current_user from :new_offence;
-    
+    END;
+
+    BEGIN
+        /* UPDATE APPEARANCE TABLE */
+            appearance = select s.casenumber, s.filenumber1, s.filenumber2,
+                offence.ID as offence_id,
+                def.id as defendant_id,
+       --         replace(s.defendant,',',''),
+         --       replace(def.lastname || def.middlename || def.firstname, ',',''),
+                officer.id as officer_id,
+                county.id as county_id,
+                to_date('20' || right(s.courtdate,2) || left(s.courtdate,2) || substr(s.courtdate,4,2)) as courtdate,
+                courtroom.id as courtroom_id,
+                replace(s.bond,',','') as bond,
+                s.bondattr as bondattr
+                from cd_staging s
+                join cd_offence offence
+                on offence.offence_name = s.offence
+                join cd_officer officer
+                on officer.lastname = substr_before(s.officer, ',')
+                join cd_client def
+                on def.lastname || def.middlename || def.firstname = replace(s.defendant, ',','')
+                join cd_county county
+                on county.county_name = s.county
+                join cd_room courtroom
+                on courtroom.room_name = s.courtroom                
+                ;
+         --   new_offence = SELECT offence as offence_name FROM :offence minus SELECT DISTINCT offence_name FROM cd_offence;  
+            INSERT INTO CD_appearance (ID, casenumber, filenumber1, filenumber2, offence_id, defendant_id, officer_id, county_id, courtdate, courtroom_id, bond, bondattr)--createdat, createdby, modifiedat, modifiedby)
+            select "procs::SQ_APPEARANCE_ID".nextval AS ID, casenumber, filenumber1, filenumber2, OFFENCE_ID, defendant_id, officer_id,
+             county_id, courtdate, courtroom_id, bond, bondattr
+            from :appearance;
+        /* END APPEARANCE_TABLE */
     END;
 END;
 

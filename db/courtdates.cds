@@ -54,7 +54,7 @@ entity room {
         COUNTY : Association to one county;
 };
 
-entity appearance {
+entity appearance :cuid {
     key ID          : Integer;
         CASENUMBER  : Integer;
         FILENUMBER1 : String(20);
@@ -69,7 +69,7 @@ entity appearance {
         BONDATTR    : String(50);
 };
 
-entity staging : cuid {
+entity staging {
         CASENUMBER  : String(10);
         FILENUMBER1 : String(20);
         FILENUMBER2 : String(20);
@@ -81,5 +81,6 @@ entity staging : cuid {
         COURTROOM   : String(100);
         BOND        : String(15);
         BONDATTR    : String(50);
+        ATTORNEY    : String(50);
 
 };
