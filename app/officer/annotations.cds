@@ -1,1 +1,1 @@
-using CatalogService as service from '../../srv/courtdates_srv';
+using MasterDataService as service from '../../srv/courtdates_srv';

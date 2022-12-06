@@ -37,7 +37,7 @@ entity client : managed {
         FIRSTNAME  : Name;
         MIDDLENAME : Name;
         LASTNAME   : Name;
-        COUNTY     : Association to county;
+        COUNTY     : Association to one county;
 
 };
 
@@ -83,4 +83,22 @@ entity staging {
         BONDATTR    : String(50);
         ATTORNEY    : String(50);
 
+};
+
+//context views {
+    @cds.persistence.exists
+ //   entity V_MAR_COUNTY {
+//        MIN_COURTDATE   : Date;
+  //      MAX_COURTDATE   : Date;
+//        COUNTY_NAME     : String(100);
+//        OFFENCE_NAME    : String(100);
+//        COUNT_OFFENCES  : Integer;
+//    }
+//}
+
+
+define view V_MAR_COUNTY as select from appearance {
+
+    OFFENCE.OFFENCE_NAME,
+    COUNTY.COUNTY_NAME
 };
