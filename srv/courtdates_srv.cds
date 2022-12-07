@@ -1,5 +1,5 @@
 using { cd.masterdata as my
- } from '../db/courtdates';
+ } from '../db/schema/courtdates-MD';
 service cdService {
 //    entity Officer as projection on cd.Officer;
     entity County as projection on my.County;
