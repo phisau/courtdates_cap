@@ -1,15 +1,8 @@
-using {
-    cd.officer as officer,
-    cd.attorney as attorney,
-    cd.appearance as appearance,
-    cd.V_MAR_COUNTY as V_MAR_COUNTY,
-//    cd.VIEW_MAR,
-    cd 
+using { cd.masterdata as my
  } from '../db/courtdates';
-service MasterDataService @(path : '/MasterDataService') {
-    entity officer as projection on cd.officer;
-    entity attorney as projection on cd.attorney;
-    entity appearance as projection on cd.appearance;  
-    entity v_mar_county as projection on V_MAR_COUNTY;
-//    entity view_mar as projection on cd.VIEW_MAR;
+service cdService {
+//    entity Officer as projection on cd.Officer;
+    entity County as projection on my.County;
+/*    entity Attorney as projection on Attorney;
+    entity Appearance as projection on Appearance;  */
 }

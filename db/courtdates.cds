@@ -1,4 +1,4 @@
-namespace cd;
+namespace cd.masterdata;
 
 using {
     managed,
@@ -10,21 +10,21 @@ using {
 type Name  : String(100);
 type SDATE : Date;
 
-entity county : managed {
+entity County : managed {
     key ID   : Integer;
         COUNTY_NAME : String(50);
 };
 
-entity officer : managed {
+entity Officer : managed {
     key ID         : Integer;
         FIRSTNAME  : Name;
         MIDDLENAME : Name;
         LASTNAME   : Name;
         RANK       : String(20);
-        COUNTY     : Association to one county;
+        COUNTY     : Association to one County;
 };
 
-entity attorney : managed {
+entity Attorney : managed {
     key ID         : Integer;
         FIRSTNAME  : Name;
         MIDDLENAME : Name;
@@ -32,44 +32,44 @@ entity attorney : managed {
 //        COUNTY     : Association to county;
 };
 
-entity client : managed {
+entity Client : managed {
     key ID         : Integer;
         FIRSTNAME  : Name;
         MIDDLENAME : Name;
         LASTNAME   : Name;
-        COUNTY     : Association to one county;
+        COUNTY     : Association to one County;
 
 };
 
-entity offence : managed {
+entity Offence : managed {
     key ID   : Integer;
         OFFENCE_NAME : String(200);
         CLS  : String(50);
 };
 
-entity room {
+entity Room {
 
     key ID     : Integer;
         ROOM_NAME   : Name;
-        COUNTY : Association to one county;
+        COUNTY : Association to one County;
 };
 
-entity appearance :cuid {
+entity Appearance :cuid {
     key ID          : Integer;
         CASENUMBER  : Integer;
         FILENUMBER1 : String(20);
         FILENUMBER2 : String(20);
-        OFFENCE     : Association to offence;
-        DEFENDANT   : Association to one client;
-        OFFICER     : Association to one officer;
-        COUNTY      : Association to one county;
+        OFFENCE     : Association to Offence;
+        DEFENDANT   : Association to one Client;
+        OFFICER     : Association to one Officer;
+        COUNTY      : Association to one County;
         COURTDATE   : SDATE;
-        COURTROOM   : Association to one room;
+        COURTROOM   : Association to one Room;
         BOND        : Integer;
         BONDATTR    : String(50);
 };
 
-entity staging {
+entity Staging {
         CASENUMBER  : String(10);
         FILENUMBER1 : String(20);
         FILENUMBER2 : String(20);
@@ -86,7 +86,7 @@ entity staging {
 };
 
 //context views {
-    @cds.persistence.exists
+//    @cds.persistence.exists
  //   entity V_MAR_COUNTY {
 //        MIN_COURTDATE   : Date;
   //      MAX_COURTDATE   : Date;
@@ -95,10 +95,3 @@ entity staging {
 //        COUNT_OFFENCES  : Integer;
 //    }
 //}
-
-
-define view V_MAR_COUNTY as select from appearance {
-
-    OFFENCE.OFFENCE_NAME,
-    COUNTY.COUNTY_NAME
-};
