@@ -1,0 +1,69 @@
+_schema-version: '3.1'
+ID: courtdates_hemlock
+version: 1.0.1
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production
+        - npx rimraf gen/db/src/gen/data
+modules:
+  - name: courtdates_hemlock-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: courtdates_hemlock-db
+#      - name: courtdates_hemlock-auth
+      - name: courtdates_hemlock-uaa
+
+  - name: courtdates_hemlock-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: courtdates_hemlock-db
+
+resources:
+  - name: courtdates_hemlock-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+#  - name: courtdates_hemlock-auth
+#    type: org.cloudfoundry.managed-service
+#    parameters:
+#      service: xsuaa
+#      service-plan: application
+#      path: ./xs-security.json
+#      config:
+#        xsappname: courtdates_hemlock-${org}-${space}
+#        tenant-mode: dedicated
+  - name: courtdates_hemlock-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: courtdates_hemlock-${org}-${space}
+        tenant-mode: dedicated
+        role-collections:
+          -name: 'Viewer-${space}'
+          description: View
+          role-template-references:
+            - $XSAPPNAME.Viewer
+
+

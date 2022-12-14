@@ -93,6 +93,6 @@ annotate service.Appearance with @(
             Target : '@UI.FieldGroup#Main',
         }
     ],
-    UI.SelectionFields  : [CountyName, Attorney, OFFICER_ID]
+    UI.SelectionFields  : [CountyName, Attorney, Officer]
     
 );

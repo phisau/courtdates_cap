@@ -6,7 +6,12 @@ service cdService {
     entity County     as projection on md.County;
     entity Officer    as projection on md.Officer;
 
-    entity Appearance as
+    entity Appearance @(restrict : [
+        {
+            grant: [ 'READ' ],
+            to :  [ 'Viewer']
+        }
+    ]) as
         select from tr.Appearance {
             COURTDATE,
             FILENUMBER1,
