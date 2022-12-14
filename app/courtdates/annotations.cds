@@ -4,13 +4,23 @@ annotate service.Appearance with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'ID',
-            Value : ID,
+            Label : 'COUNTY',
+            Value : CountyName,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'CASENUMBER',
-            Value : CASENUMBER,
+            Label : 'Courtdate',
+            Value : COURTDATE,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Courtroom',
+            Value : RoomName,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Defendant Lastname',
+            Value : DefendantLastname,
         },
         {
             $Type : 'UI.DataField',
@@ -24,25 +34,15 @@ annotate service.Appearance with @(
         },
         {
             $Type : 'UI.DataField',
-            Label : 'OFFENCE_ID',
-            Value : OFFENCE_ID,
+            Label : 'Offence Name',
+            Value : Offence,
         },
     ]
 );
 annotate service.Appearance with @(
-    UI.FieldGroup #GeneratedGroup1 : {
+    UI.FieldGroup#Main: {
         $Type : 'UI.FieldGroupType',
         Data : [
-            {
-                $Type : 'UI.DataField',
-                Label : 'ID',
-                Value : ID,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'CASENUMBER',
-                Value : CASENUMBER,
-            },
             {
                 $Type : 'UI.DataField',
                 Label : 'FILENUMBER1',
@@ -55,52 +55,44 @@ annotate service.Appearance with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'OFFENCE_ID',
-                Value : OFFENCE_ID,
+                Label : 'Offence',
+                Value : Offence,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'DEFENDANT_ID',
-                Value : DEFENDANT_ID,
+                Label : 'Defendant Lastname',
+                Value : DefendantLastname,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'OFFICER_ID',
-                Value : OFFICER_ID,
+                Label : 'Officer',
+                Value : Officer,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'COUNTY_ID',
-                Value : COUNTY_ID,
+                Label : 'COUNTY',
+                Value : CountyName,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'COURTDATE',
+                Label : 'Courtdate',
                 Value : COURTDATE,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'COURTROOM_ID',
-                Value : COURTROOM_ID,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'BOND',
-                Value : BOND,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'BONDATTR',
-                Value : BONDATTR,
+                Label : 'Courtroom',
+                Value : RoomName,
             },
         ],
     },
     UI.Facets : [
         {
             $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target : '@UI.FieldGroup#GeneratedGroup1',
-        },
-    ]
+            ID : 'Main',
+            Label : 'Newest Court Appearances',
+            Target : '@UI.FieldGroup#Main',
+        }
+    ],
+    UI.SelectionFields  : [CountyName, Attorney, OFFICER_ID]
+    
 );

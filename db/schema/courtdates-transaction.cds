@@ -11,6 +11,7 @@ entity Appearance : cuid {
         OFFENCE     : Association to md.Offence;
         DEFENDANT   : Association to one md.Client;
         OFFICER     : Association to one md.Officer;
+        Attorney    : Association to one md.Attorney;
         COUNTY      : Association to one md.County;
         COURTDATE   : md.SDATE;
         COURTROOM   : Association to one md.Room;

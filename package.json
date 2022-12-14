@@ -50,5 +50,17 @@
   },
   "sapux": [
     "app/courtdates"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sql"
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana-cloud"
+        }
+      }
+    }
+  }
 }
