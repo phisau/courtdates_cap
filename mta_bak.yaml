@@ -1,6 +1,6 @@
 _schema-version: '3.1'
 ID: courtdates_hemlock
-version: 1.0.5
+version: 1.0.2
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
@@ -25,6 +25,7 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: courtdates_hemlock-db
+      #      - name: courtdates_hemlock-auth
       - name: courtdates_hemlock-uaa
 
   - name: courtdates_hemlock-db-deployer
@@ -41,6 +42,15 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+  #  - name: courtdates_hemlock-auth
+  #    type: org.cloudfoundry.managed-service
+  #    parameters:
+  #      service: xsuaa
+  #      service-plan: application
+  #      path: ./xs-security.json
+  #      config:
+  #        xsappname: courtdates_hemlock-${org}-${space}
+  #        tenant-mode: dedicated
   - name: courtdates_hemlock-uaa
     type: org.cloudfoundry.managed-service
     parameters:
@@ -49,8 +59,9 @@ resources:
       path: ./xs-security.json
       config:
         xsappname: courtdates_hemlock-${org}-${space}
+        tenant-mode: dedicated
         role-collections:
-          - name: 'Viewer-${space}'
-            description: View
-            role-template-references:
-              - $XSAPPNAME.Viewer
+          -name: 'Viewer-${space}'
+          description: View
+          role-template-references:
+            - $XSAPPNAME.Viewer

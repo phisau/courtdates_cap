@@ -1,6 +1,0 @@
-view "MD_ROOMS" (
-    ROOM_NAME, COUNTY_NAME, ROOM_ID, COUNTY_ID
-) AS SELECT ROOM_NAME, county_name, cd_room.ID, cd_county.ID
-FROM cd_room
-join cd_county
-on cd_room.county_id = cd_county.id

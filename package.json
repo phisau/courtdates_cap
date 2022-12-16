@@ -1,6 +1,6 @@
 {
   "name": "courtdates_hemlock",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
@@ -58,7 +58,7 @@
       },
       "[production]": {
         "db": {
-          "kind": "hana-cloud"
+          "kind": "hana"
         },
         "auth": {
           "kind": "xsuaa"
