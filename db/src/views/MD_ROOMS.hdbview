@@ -1,0 +1,6 @@
+view "MD_ROOMS" (
+    ROOM_NAME, COUNTY_NAME, ROOM_ID, COUNTY_ID
+) AS SELECT ROOM_NAME, county_name, r.ID, c.ID
+FROM cd_masterdata_room r
+join cd_masterdata_county c
+on r.county_id = c.id

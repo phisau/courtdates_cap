@@ -52,6 +52,12 @@
     "app/courtdates"
   ],
   "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "hana-cloud": {
+      "deploy-format": "hdbtable"
+    },
     "requires": {
       "db": {
         "kind": "sql"
@@ -62,6 +68,11 @@
         },
         "auth": {
           "kind": "xsuaa"
+        }
+      },
+      "[hybrid]": {
+        "db": {
+          "kind": "hana-cloud"
         }
       }
     }
