@@ -1,8 +1,6 @@
-# Getting Started
+# Courtdates app
 
-Welcome to your new project.
-
-It contains these folders and files, following our recommended project layout:
+SAP HANA XSA implementation of courtdates app
 
 File or Folder | Purpose
 ---------|----------
@@ -13,13 +11,6 @@ File or Folder | Purpose
 `readme.md` | this getting started guide
 
 
-## Next Steps
+## Installation
 
-- Open a new terminal and run `cds watch` 
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
-
-
-## Learn More
-
-Learn more at https://cap.cloud.sap/docs/get-started/.
+- Open a new terminal and run `mbt build -t gen --mtar mta.tar && cf deploy gen/mta.tar`
