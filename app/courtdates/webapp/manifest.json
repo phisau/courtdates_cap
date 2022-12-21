@@ -34,7 +34,18 @@
           "localUri": "annotations/annotation.xml"
         }
       }
-    }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Mitigations-display": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "Appearance",
+          "action": "display"
+        }
+      }
   },
   "sap.ui": {
     "technology": "UI5",
@@ -142,5 +153,9 @@
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "courtdates.service"
   }
 }

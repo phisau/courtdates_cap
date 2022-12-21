@@ -26,6 +26,43 @@ modules:
       TARGET_CONTAINER: courtdates_hemlock-db
   parameters:
     buildpack: nodejs_buildpack
+- name: courtdates-destinations
+   type: com.sap.application.content
+   requires:
+     - name: courtdates-uaa
+       parameters:
+         service-key:
+           name: courtdates-uaa-key
+     - name: courtdates-html5-repo-host
+       parameters:
+         service-key:
+           name: courtdates-html5-repo-host-key
+     - name: srv-api
+     - name: courtdates-destination
+       parameters:
+         content-target: true
+   parameters:
+     content:
+       instance:
+         destinations:
+           - Authentication: OAuth2UserTokenExchange
+             Name: courtdates-app-srv
+             TokenServiceInstanceName: courtdates-uaa
+             TokenServiceKeyName: courtdates-uaa-key
+             URL: '~{srv-api/srv-url}'
+             sap.cloud.service: courtdates.service
+           - Name: courtdates-html5-repo-host
+             ServiceInstanceName: courtdates-html5-repo-host
+             ServiceKeyName: courtdates-html5-repo-host-key
+             sap.cloud.service: courtdates.service
+           - Authentication: OAuth2UserTokenExchange
+             Name: courtdates-uaa
+             ServiceInstanceName: courtdates-uaa
+             ServiceKeyName: courtdates-uaa-key
+             sap.cloud.service: courtdates.service
+         existing_destinations_policy: update
+   build-parameters:
+     no-source: true
 resources:
 - name: courtdates_hemlock-db
   type: com.sap.xs.hdi-container
@@ -45,6 +82,18 @@ resources:
     path: ./xs-security.json
     service: xsuaa
     service-plan: application
+- name: courtdates-destination
+ type: org.cloudfoundry.managed-service
+ parameters:
+   service: destination
+   service-plan: lite
+   config:
+     HTML5Runtime_enabled: true
+- name: courtdates-html5-repo-host
+ type: org.cloudfoundry.managed-service
+ parameters:
+   service: html5-apps-repo
+   service-plan: app-host
 parameters:
   enable-parallel-deployments: true
 build-parameters:
